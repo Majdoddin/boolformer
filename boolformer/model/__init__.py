@@ -17,16 +17,16 @@ import gdown
 
 logger = getLogger()
 
-def load_boolformer(mode="noiseless"):
-    model_path = f"boolformer_{mode}.pt" 
+def load_boolformer(mode="noiseless", device='cpu'):
+    model_path = f"boolformer_{mode}.pt"
     if not os.path.exists(model_path):
         if mode=="noiseless":
             url = "https://drive.google.com/uc?id=1cULlE16yKBqUZMMGv7CC5fgHXXJ7OQQQ"
         elif mode=="noisy":
             url = "https://drive.google.com/uc?id=1IFSc_sHfiTckMy-cwggvVMBH1YgXas8G"
-        
+
         gdown.download(url, model_path, quiet=False)
-    boolformer_model = torch.load(model_path)
+    boolformer_model = torch.load(model_path, map_location=device)
     print(f"Loaded {mode} model")
     return boolformer_model
 
